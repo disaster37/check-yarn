@@ -70,6 +70,10 @@ func main() {
 					Name:  "queue-name",
 					Usage: "The queue name where you should to checks the jobs",
 				},
+				cli.StringFlag{
+					Name:  "user-name",
+					Usage: "The user name where you should to checks the jobs",
+				},
 			},
 			Action: checkJobs,
 		},

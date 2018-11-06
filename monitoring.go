@@ -5,12 +5,12 @@ import (
 	"github.com/disaster37/go-yarn-rest/client"
 )
 
-func computeState(jobs []client.Application, monitoringData *nagiosPlugin.Monitoring) (*nagiosPlugin.Monitoring, error) {
+func computeState(jobs []client.ApplicationInfo, monitoringData *nagiosPlugin.Monitoring) (*nagiosPlugin.Monitoring, error) {
 
 	monitoringData.AddPerfdata("nbJobFailed", len(jobs), "")
 	if len(jobs) > 0 {
 		monitoringData.SetStatus(nagiosPlugin.STATUS_CRITICAL)
-		monitoringData.AddMessage("There are %d jobs in error", len(jobs))
+		monitoringData.AddMessage("There are %d jobs in failed state", len(jobs))
 	} else {
 		monitoringData.AddMessage("All work fine!")
 	}

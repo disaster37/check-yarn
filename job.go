@@ -30,13 +30,16 @@ func checkJobs(c *cli.Context) error {
 	yarnClient.DisableVerifySSL()
 
 	// Get failed jobs
-	dateTime := time.Now().AddDate(0, c.Int("finished-since"), 0)
+	dateTime := time.Now().Add(time.Duration(c.Int("finished-since")) * -1 * time.Hour)
 	filters := map[string]string{
-		"startedTimeBegin": strconv.FormatInt(dateTime.Unix(), 10),
-		"states":           "FAILED",
+		"finishedTimeBegin": strconv.FormatInt(dateTime.UnixNano()/1000000, 10),
+		"states":            "FAILED",
 	}
 	if c.String("queue-name") != "" {
 		filters["queue"] = c.String("queue-name")
+	}
+	if c.String("user-name") != "" {
+		filters["user"] = c.String("user-name")
 	}
 
 	// Check node alertes
