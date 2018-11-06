@@ -6,7 +6,7 @@ jobs:
   test:
     docker:
       - image: circleci/golang:1.11
-    working_directory: /go/src/github.com/disaster37/check-ambari
+    working_directory: /go/src/github.com/disaster37/check-yarn
     steps:
       - checkout
       - run: go get -v -t -d ./...
@@ -14,7 +14,7 @@ jobs:
   build:
     docker:
       - image: circleci/golang:1.11
-    working_directory: /go/src/github.com/disaster37/check-ambari
+    working_directory: /go/src/github.com/disaster37/check-yarn
     steps:
       - checkout
       - run: go get -v -t -d ./...
@@ -27,14 +27,14 @@ jobs:
           - CIRCLE_PROJECT_USERNAME: $CIRCLE_PROJECT_USERNAME
           - CIRCLE_PROJECT_REPONAME: $CIRCLE_PROJECT_REPONAME
           - CIRCLE_TAG: $CIRCLE_TAG
-    working_directory: /go/src/github.com/disaster37/check-ambari
+    working_directory: /go/src/github.com/disaster37/check-yarn
     steps:
       - checkout
       - run: go get -v -t -d ./...
       - run: go get github.com/mitchellh/gox
       - run: go get github.com/tcnksm/ghr
-      - run: sed -i 's/app.Version := "develop"/app.Version := "$CIRCLE_TAG"/' check-ambari.go
-      - run: gox -os="linux" -output "dist/check-ambari_{{.OS}}_{{.Arch}}"
+      - run: sed -i 's/app.Version := "develop"/app.Version := "$CIRCLE_TAG"/' check-yarn.go
+      - run: gox -os="linux" -output "dist/check-yarn_{{.OS}}_{{.Arch}}"
       - run: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME $CIRCLE_TAG dist/
 workflows:
   version: 2
