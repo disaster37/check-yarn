@@ -5,7 +5,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli/altsrc"
 	prefixed "github.com/x-cray/logrus-prefixed-formatter"
-	"gopkg.in/urfave/cli.v1"
+	"github.com/urfave/cli"
 	"os"
 )
 

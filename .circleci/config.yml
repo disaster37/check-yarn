@@ -5,24 +5,27 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/golang:1.11
+      - image: circleci/golang:1.15
+        environment:
+          GO111MODULE: "on"
     working_directory: /go/src/github.com/disaster37/check-yarn
     steps:
       - checkout
-      - run: go get -v -t -d ./...
       - run: go test -v ./...
   build:
     docker:
-      - image: circleci/golang:1.11
+      - image: circleci/golang:1.15
+        environment:
+          GO111MODULE: "on"
     working_directory: /go/src/github.com/disaster37/check-yarn
     steps:
       - checkout
-      - run: go get -v -t -d ./...
       - run: go build
   release:
     docker:
-      - image: circleci/golang:1.11
+      - image: circleci/golang:1.15
         environment:
+          - GO111MODULE: "on"
           - GITHUB_TOKEN: $GITHUB_TOKEN
           - CIRCLE_PROJECT_USERNAME: $CIRCLE_PROJECT_USERNAME
           - CIRCLE_PROJECT_REPONAME: $CIRCLE_PROJECT_REPONAME
@@ -30,7 +33,6 @@ jobs:
     working_directory: /go/src/github.com/disaster37/check-yarn
     steps:
       - checkout
-      - run: go get -v -t -d ./...
       - run: go get github.com/mitchellh/gox
       - run: go get github.com/tcnksm/ghr
       - run: sed -i 's/app.Version := "develop"/app.Version := "$CIRCLE_TAG"/' check-yarn.go
