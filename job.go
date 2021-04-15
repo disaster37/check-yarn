@@ -36,7 +36,7 @@ func checkJobs(c *cli.Context) error {
 		"states":            "FAILED",
 	}
 	if c.String("queue-name") != "" {
-		filters["queue"] = c.String("queue-name")
+		filters["queueName"] = c.String("queue-name")
 	}
 	if c.String("user-name") != "" {
 		filters["user"] = c.String("user-name")
