@@ -35,7 +35,7 @@ jobs:
       - checkout
       - run: go get github.com/mitchellh/gox
       - run: go get github.com/tcnksm/ghr
-      - run: sed -i 's/app.Version := "develop"/app.Version := "$CIRCLE_TAG"/' check-yarn.go
+      - run: sed -i 's/app.Version := "develop"/app.Version := "$CIRCLE_TAG"/' main.go
       - run: gox -os="linux" -output "dist/check-yarn_{{.OS}}_{{.Arch}}"
       - run: ghr -t $GITHUB_TOKEN -u $CIRCLE_PROJECT_USERNAME -r $CIRCLE_PROJECT_REPONAME $CIRCLE_TAG dist/
 workflows:
