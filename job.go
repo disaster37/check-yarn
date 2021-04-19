@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/disaster37/go-nagios"
-	"github.com/disaster37/go-yarn-rest/client"
-	"gopkg.in/urfave/cli.v1"
 	"strconv"
 	"time"
+
+	"github.com/disaster37/go-nagios"
+	"github.com/disaster37/go-yarn-rest/client"
+	"github.com/urfave/cli"
 )
 
 // Perform a node check
