@@ -36,19 +36,32 @@ func checkJobs(c *cli.Context) error {
 		"finishedTimeBegin": strconv.FormatInt(dateTime.UnixNano()/1000000, 10),
 		"states":            "FAILED",
 	}
-	if c.String("queue-name") != "" {
-		filters["queueName"] = c.String("queue-name")
+	if !c.Bool("fix-bug-2.7") && c.String("queue-name") != "" {
+		filters["queue"] = c.String("queue-name")
 	}
 	if c.String("user-name") != "" {
 		filters["user"] = c.String("user-name")
 	}
 
 	// Check node alertes
-	jobs, err := yarnClient.Applications(filters)
+	jobsTmp, err := yarnClient.Applications(filters)
 	if err != nil {
 		monitoringData.AddMessage("Somethink wrong when try to check jobs on Yarn: %v", err)
 		monitoringData.SetStatus(nagiosPlugin.STATUS_UNKNOWN)
 		monitoringData.ToSdtOut()
+	}
+
+	// Check if filter must be run after grab data
+	var jobs []client.ApplicationInfo
+	if c.Bool("fix-bug-2.7") {
+		jobs = make([]client.ApplicationInfo, 0)
+		for _, job := range jobsTmp {
+			if job.Queue == c.String("queue-name") {
+				jobs = append(jobs, job)
+			}
+		}
+	} else {
+		jobs = jobsTmp
 	}
 
 	monitoringData, err = computeState(jobs, monitoringData)

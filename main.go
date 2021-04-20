@@ -74,6 +74,10 @@ func main() {
 					Name:  "user-name",
 					Usage: "The user name where you should to checks the jobs",
 				},
+				cli.BoolFlag{
+					Name: "fix-bug-2.7",
+					Usage: "Use it to fix bug on Yarn 2.7 when you filter failed job on queue name",
+				},
 			},
 			Action: checkJobs,
 		},
