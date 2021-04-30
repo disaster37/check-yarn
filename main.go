@@ -61,6 +61,11 @@ func main() {
 			Name:  "check-jobs",
 			Usage: "Check the jobs state",
 			Flags: []cli.Flag{
+				cli.StringSliceFlag{
+					Name: "state",
+					Usage: "The failed states",
+					Value: &cli.StringSlice{"states=FAILED"},
+				},
 				cli.IntFlag{
 					Name:  "finished-since",
 					Usage: "How many time in hour the jobs are finished",
@@ -74,10 +79,15 @@ func main() {
 					Name:  "user-name",
 					Usage: "The user name where you should to checks the jobs",
 				},
+				cli.StringFlag{
+					Name:  "job-name",
+					Usage: "The job name that you should to check",
+				},
 				cli.BoolFlag{
 					Name: "fix-bug-2.7",
 					Usage: "Use it to fix bug on Yarn 2.7 when you filter failed job on queue name",
 				},
+				
 			},
 			Action: checkJobs,
 		},

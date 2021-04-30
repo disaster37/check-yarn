@@ -44,6 +44,8 @@ You need to specify the following parameters:
 - **--finished-since**: The number of hour since the current datetime.
 - **--queue-name** (optionnal): The queue name where you should to check jobs.
 - **--user-name** (optionnal): The user that run the jobs where you should to check.
+- **--job-name** (optionnal): The job name that you should to check. You can use regular expression.
+- **--state** (optionnal): The failed state. Default to `states=FAILED`. You can use it like this `--state "states=FAILED,FINISHED" --state "finalStatus=FAILED"`
 
 This check follow this logic:
 1. `OK` when there are no failed jobs with the given filter
